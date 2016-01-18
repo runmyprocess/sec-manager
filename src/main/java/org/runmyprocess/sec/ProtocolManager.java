@@ -143,6 +143,7 @@ public class ProtocolManager extends HttpServlet {
     private void replyMessage(HttpServletResponse response, int status, JSONObject message){
 		try {
 			response.setStatus(status);
+			response.setCharacterEncoding("utf-8");
 	        response.setContentType("application/json");
 	        PrintWriter out;
 	        out = response.getWriter();
@@ -224,7 +225,7 @@ public class ProtocolManager extends HttpServlet {
             request.setProtocol(jsonRequest.getString("protocol"));//Sets the protocol's name
             request.setData(jsonRequest.getJSONObject("data"));//sets the data to be posted
             Response resp = processRequest(request, protocolHandler.getString("host"), protocolHandler.getInteger("port"));//Launches the request to a host/port
-            if (resp.getStatus()==200){//Check if everything went OK
+            if (resp.getStatus()==200){//Check if everything is OK
         		replyMessage(response,200,resp.getData());		
             }else{
             	try {
